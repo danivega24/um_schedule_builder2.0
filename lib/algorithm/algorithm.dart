@@ -26,33 +26,83 @@ first add in classes, preceded by prerequisites, then fill in with all of the ot
 
 */
 
+import 'dart:collection';
+import 'lib/database/class.dart';
 
-import 'class.dart';
+//I beleive future we will pass in a single final_class where we will use the prereqs to make our prereq chain
+ void algorithm(List<Class> &prereqs, int &total_credits){
+
+  HashMap<String, String> all_prereqs = new HashMap<String, String>();
+
+  for(int i = 0; i < prereqs.length; i++){
+    List<String> strings = [prereqs[i].department, (prereqs[i].courseNumber).toString()];
+    String combined = strings.join(' ');
+    all_prereqs[combined].second = prereqs[i].prereqs;
+  }
+
+  Queue<Class> search = Queue<Class>();
+  search.add(final_class); //will eventually be passed in
+
+  while(search.isNotEmpty){
+    Class curr_class = search.first;
+    search.removeFirst();
+
+    if(all_prereqs.containsKey(curr_class)){
+      /*this section will iterate through the string of prereqs and add them to search
+      
+      for(int i = 0; i < all_prereqs[curr_class].second.length; i++
+      {
+
+        search.add(course name);
+
+      }
+
+
+      */
+    
+    //add curr class to a running tally of courses
+      total_credits += curr_class.credits;
+    }
+  }
+  
+ }
+
 class AlgorithmTesting {
 
 
  //algorithm data
-
-
-
-
-
-
-
-
  //-------------------------------------------
  //functions
- List<Class> getPrereqs(Class class) {
+ List<Class> getPrereqs(Class &class) {
 
+
+    //pull in from the "prereqs" string.
+
+
+    //now break the string into the classes that are needed
+    List<String> prereqNames; //edit later to make it 2-D for classes that complete the same prereq
+    int depth = 0;
+    int curr_begin = 0;
+    for(int i = 0; i < class.prereqs.length; i++){
+      if(class.prereqs[i] == ';' || class.prereqs[i] == ','){
+        prereqNames.add(class.prereqs.substring(curr_begin, i));
+      }
+    } 
+
+    //then search data base for associated class
+
+
+    //add class to List
+
+
+    //return the new List of classes
 
  }
-
-
+ 
  List<Class> getProgramRequirements(/*major, minor*/){
 
 
  }
-
 
  List<Class> getListOfClasses(/*reqs needed*/) {
 
