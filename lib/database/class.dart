@@ -3,6 +3,7 @@ class Class
   //basic class information
   final String department; //EX: EECS
   final int courseNumber; //EX: 281
+  final int id; //first 4 digits convert to department, last 3 digits are coursenumber. 7 digits total //EX: 4429281 [EECS281]
   final int credits; //EX: 4
   final String prereqs; //list of prereqs as string. ';' seperating different requirements ',' seperating classes that would fufil the same req
 
@@ -38,6 +39,7 @@ class Class
   Class({
     required this.department,
     required this.courseNumber,
+    required this.id,
     required this.credits,
     required this.prereqs,
     // required this.isCE,
