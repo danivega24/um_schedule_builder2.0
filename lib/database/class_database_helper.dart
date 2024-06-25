@@ -1,7 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'class.dart';
-import 'major.dart';
 
 class ClassDatabaseHelper {
 
@@ -20,6 +19,7 @@ class ClassDatabaseHelper {
 
   ClassDatabaseHelper._constructor();
 
+
   Future<Database> get database async {
     if (_db != null) return _db!;
     _db = await getDatabase();
@@ -28,10 +28,10 @@ class ClassDatabaseHelper {
 
   Future<Database> getDatabase() async {
     final databaseDirPath = await getDatabasesPath();
-    final databasePath = join(databaseDirPath, "class_db.db");
+    final databasePath = join(databaseDirPath, "class_database.db");
     final database = await openDatabase(
       databasePath, 
-      version: 1,
+      version: 3,
       onCreate: (db, version) {
         db.execute('''
         CREATE TABLE $_classTableName (
@@ -45,39 +45,45 @@ class ClassDatabaseHelper {
           $_classIsULCSColumnName INTEGER
         )
         ''');
+
+        // ALL CODE FOR ON CREATE
+        dataOnCreate();
       },
+      onUpgrade: (db, oldVersion, newVersion) {
+        db.execute("DELETE FROM $_classTableName");
+        dataOnCreate();
+      },
+    
     );
     return database;
   }
 
-  void addClass({
-    required String department, 
-    required int courseNumber, 
-    required int credits,
-    String prereqs = "",
-    int isHU = 0, 
-    int isFlexTech = 0,
-    int isIB = 0,
-    int isULCS = 0  
-    }) async 
+  void dataOnCreate()
+  {
+    addClass(Class(department: "EECS", courseNumber: 281, credits: 4, prereqs: "", isHU: 0, isFlexTech: 0, isIB: 0, isULCS: 0));
+
+  }
+
+  void addClass(Class classToInsert) async 
   {
 
     final db = await database;
     await db.insert(
       _classTableName, 
       {
-        _classDepartmentColumnName: department, 
-        _classCourseNumberColumnName: courseNumber,
-        _classCreditsColumnName: credits, 
-        _classPrereqsColumnName: prereqs, 
-        _classIsHUColumnName: isHU, 
-        _classIsFlexTechColumnName: isFlexTech, 
-        _classIsIBTechColumnName: isIB, 
-        _classIsULCSColumnName: isULCS,
+        _classDepartmentColumnName: classToInsert.department, 
+        _classCourseNumberColumnName: classToInsert.courseNumber,
+        _classCreditsColumnName: classToInsert.credits, 
+        _classPrereqsColumnName: classToInsert.prereqs, 
+        _classIsHUColumnName: classToInsert.isHU, 
+        _classIsFlexTechColumnName: classToInsert.isFlexTech, 
+        _classIsIBTechColumnName: classToInsert.isIB, 
+        _classIsULCSColumnName: classToInsert.isULCS,
       },
     );
   }
 
+  //converts the sqlite output to a list
   List<Class> convertQueryToList(List<Map<String, Object?>> query)
   {
     return query.map((e) => Class(
@@ -92,6 +98,7 @@ class ClassDatabaseHelper {
       )).toList();
   }
 
+  //returns a complete list of all classes
   Future<List<Class>> getAllClasses() async {
     final db = await database;
     final data = await db.query(_classTableName);
@@ -99,10 +106,36 @@ class ClassDatabaseHelper {
     return tasks;
   }
 
-  Future<List<Class>> getQueryFromList(String SQLiteQuery) async
+  //returns list of all classes that meet a raw sqlite query
+  Future<List<Class>> getListFromQuery(String SQLiteQuery) async
   {
     final db = await database;
     final data = await db.rawQuery(SQLiteQuery);
     return convertQueryToList(data);
   }
+
+  Future<List<Class>> getAllClassesThatMeetReqs ({
+    String department = "", 
+    int minimumCredits = 0, 
+    bool isHU = false, 
+    bool isFlexTech = false, 
+    bool isIB = false, 
+    bool isULCS = false}) async
+    {
+      int huNumber = isHU ? 1 : 0;
+      int flexTechNumber = isFlexTech ? 1 : 0;
+      int ibNumber = isIB ? 1 : 0;
+      int ulcsNumber = isULCS ? 1 : 0;
+
+      String query = '''SELECT * FROM $_classTableName
+      WHERE $_classCreditsColumnName >= $minimumCredits
+      AND $_classIsHUColumnName >= $huNumber
+      AND $_classIsHUColumnName >= $huNumber
+      AND $_classIsFlexTechColumnName >= $flexTechNumber
+      AND $_classIsIBTechColumnName >= $ibNumber
+      AND $_classIsULCSColumnName >= $ulcsNumber
+      ''';
+      
+      return getListFromQuery(query);
+    }
 }
