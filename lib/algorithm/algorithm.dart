@@ -66,21 +66,15 @@ import '../database/class.dart';
   return 128 - total_credits; //returning remaining credits needed after sequence
  }
 
-<<<<<<< HEAD
-=======
-import '/database/class.dart';
->>>>>>> c3541c4 (made simple test ui and implemented database functions)
 class AlgorithmTesting {
 
 
  //algorithm data
  //-------------------------------------------
  //functions
-<<<<<<< HEAD
 //  List<Class> getPrereqs(Class &class) {
 
 
-//     //pull in from the "prereqs" string.
 
 
 //     //now break the string into the classes that are needed
@@ -105,24 +99,9 @@ class AlgorithmTesting {
  
 //  List<Class> getProgramRequirements(/*major, minor*/){
 
-=======
  List<Class> getPrereqs(Class classInput) {
   return List.empty();
  }
-
-
- List<Class> getProgramRequirements(/*major, minor*/){
-  return List.empty();
- }
-
-
- List<Class> getListOfClasses(/*reqs needed*/) {
-  return List.empty();
->>>>>>> c3541c4 (made simple test ui and implemented database functions)
-
-//  }
-
-//  List<Class> getListOfClasses(/*reqs needed*/) {
 
 
 //  }
