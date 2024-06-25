@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:schedule_builder_um/database/class_database_helper.dart';
-import 'package:schedule_builder_um/database/class.dart';
-import 'package:schedule_builder_um/main.dart';
 import 'package:schedule_builder_um/pages/add_classes_page.dart';
 import 'package:schedule_builder_um/pages/filtered_page.dart';
 import 'package:schedule_builder_um/pages/test_page.dart';

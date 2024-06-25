@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schedule_builder_um/database/class.dart';
 import 'package:schedule_builder_um/main.dart';
-import 'package:schedule_builder_um/pages/home_page.dart';
 
 class AddClassesPage extends StatefulWidget {
   const AddClassesPage({super.key});
@@ -113,11 +112,11 @@ class _AddClassesPageState extends State<AddClassesPage> {
             ) ,
             
             MaterialButton(
-              child: Text("Add Class"),
+              child: const Text("Add Class"),
               onPressed: ()
               {
                 if (department == "" || courseNumber == 0 || credits == 0) return;
-                  classDatabase.addClass(Class(department: department, courseNumber: courseNumber, credits: credits, prereqs: "", isHU: isHU ? 1 : 0, isFlexTech: isFlexTech ? 1 : 0, isIB: isIB ? 1 : 0, isULCS: isULCS ? 1 : 0)!);
+                  classDatabase.addClass(Class(department: department, courseNumber: courseNumber, credits: credits, prereqs: "", isHU: isHU ? 1 : 0, isFlexTech: isFlexTech ? 1 : 0, isIB: isIB ? 1 : 0, isULCS: isULCS ? 1 : 0));
                 setState(() {
                   department = "";
                   courseNumber = 0;
@@ -146,7 +145,7 @@ class _AddClassesPageState extends State<AddClassesPage> {
           itemBuilder: (context, index){
             Class classItem = snapshot.data![index];
             return ListTile(
-              title: Text(classItem.department + classItem.courseNumber.toString()),
+              title: Text(classItem.toString()),
             );
           },
         );

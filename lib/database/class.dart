@@ -58,4 +58,16 @@ class Class
     required this.isULCS,
     this.id = 1,
   });
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    String returnStr = department + " " + courseNumber.toString() + " id:" + id.toString() + " ";
+    returnStr = returnStr + ((isHU == 0) ? "" : "HU ");
+    returnStr = returnStr + ((isIB == 0) ? "" : "IB ");
+    returnStr = returnStr + ((isULCS == 0) ? "" : "ULCS ");
+    returnStr = returnStr + ((isFlexTech == 0) ? "" : "FT ");
+
+    return returnStr;
+  }
 }

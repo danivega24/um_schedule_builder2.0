@@ -115,7 +115,7 @@ class ClassDatabaseHelper {
   }
 
   Future<List<Class>> getAllClassesThatMeetReqs ({
-    String department = "", 
+    int minimumCourseNumber = 0, 
     int minimumCredits = 0, 
     bool isHU = false, 
     bool isFlexTech = false, 
@@ -128,14 +128,15 @@ class ClassDatabaseHelper {
       int ulcsNumber = isULCS ? 1 : 0;
 
       String query = '''SELECT * FROM $_classTableName
-      WHERE $_classCreditsColumnName >= $minimumCredits
+      WHERE $_classCourseNumberColumnName >= $minimumCourseNumber
+      AND $_classCreditsColumnName >= $minimumCredits
       AND $_classIsHUColumnName >= $huNumber
       AND $_classIsHUColumnName >= $huNumber
       AND $_classIsFlexTechColumnName >= $flexTechNumber
       AND $_classIsIBTechColumnName >= $ibNumber
       AND $_classIsULCSColumnName >= $ulcsNumber
       ''';
-      
+
       return getListFromQuery(query);
     }
 }
