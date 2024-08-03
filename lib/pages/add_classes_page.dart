@@ -14,10 +14,12 @@ class _AddClassesPageState extends State<AddClassesPage> {
   String department = "";
   int courseNumber = 0;
   int credits = 0;
+  int id = -1;
   bool isHU = false;
   bool isULCS = false;
   bool isIB = false;
   bool isFlexTech = false;
+  String prereqs = "";
 
 
   Widget _addClassButton(){
@@ -98,7 +100,6 @@ class _AddClassesPageState extends State<AddClassesPage> {
                 hintText:'is ULCS {true, false}',
               ), 
             ) ,
-            
             TextField(
               onChanged: (value){
               setState(() {
@@ -110,7 +111,28 @@ class _AddClassesPageState extends State<AddClassesPage> {
                 hintText:'is flex tech {true, false}',
               ), 
             ) ,
-            
+            TextField(
+              onChanged: (value){
+              setState(() {
+                  id = int.parse(value);
+                });
+              }, 
+              decoration: const InputDecoration( 
+                border: OutlineInputBorder(),
+                hintText:'class id',
+              ), 
+            ) ,
+            TextField(
+              onChanged: (value){
+              setState(() {
+                  prereqs = value;
+                });
+              }, 
+              decoration: const InputDecoration( 
+                border: OutlineInputBorder(),
+                hintText:'csv of prereq ids',
+              ), 
+            ) ,
             MaterialButton(
               child: const Text("Add Class"),
               onPressed: ()

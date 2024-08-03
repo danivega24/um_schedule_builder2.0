@@ -1,0 +1,49 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        
+        {
+            "name": "flutter_sqflite_tutorial_app",
+            "cwd": "Users/ejustice/Downloads/flutter_sqflite_tutorial_app",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "flutter_sqflite_tutorial_app (profile mode)",
+            "cwd": "Users/ejustice/Downloads/flutter_sqflite_tutorial_app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "flutter_sqflite_tutorial_app (release mode)",
+            "cwd": "Users/ejustice/Downloads/flutter_sqflite_tutorial_app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "um_schedule_builder2.0",
+            "cwd": "Users/ejustice/development/um_schedule_builder2.0",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "um_schedule_builder2.0 (profile mode)",
+            "cwd": "Users/ejustice/development/um_schedule_builder2.0",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "um_schedule_builder2.0 (release mode)",
+            "cwd": "Users/ejustice/development/um_schedule_builder2.0",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

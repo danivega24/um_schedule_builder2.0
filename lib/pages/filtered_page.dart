@@ -18,17 +18,19 @@ class _FilteredPageState extends State<FilteredPage> {
   bool isULCS = false;
   bool isIB = false;
   bool isFlexTech = false;
+  int id = -1;
 
   String courseNumberin = "";
   String isHUstr = "";
   String isULCSstr = "";
   String isIBstr = "";
   String isFlexTechstr = "";
+  String idin = "";
 
 
 Widget filteredclassList()
   {
-    return FutureBuilder(future: classDatabase.getAllClassesThatMeetReqs(minimumCourseNumber:courseNumber, minimumCredits: credits, isHU: isHU, isFlexTech: isFlexTech, isIB: isIB, isULCS: isULCS), builder: (context, snapshot) {
+    return FutureBuilder(future: classDatabase.getAllClassesThatMeetReqs(minimumCourseNumber:courseNumber, minimumCredits: credits, isHU: isHU, isFlexTech: isFlexTech, isIB: isIB, isULCS: isULCS, idNumber:id), builder: (context, snapshot) {
         return ListView.builder(
           itemCount: snapshot.data?.length ?? 0,
           itemBuilder: (context, index){
@@ -121,6 +123,18 @@ Widget filteredclassList()
                 hintText:'is flex tech {true, false}',
               ), 
             ) ,
+
+            TextField(
+              onChanged: (value){
+              setState(() {
+                  idin = value;
+                });
+              }, 
+              decoration: const InputDecoration( 
+                border: OutlineInputBorder(),
+                hintText:'class id',
+              ), 
+            ) ,
             
             MaterialButton(
               child: const Text("Add Filter"),
@@ -132,12 +146,14 @@ Widget filteredclassList()
                   isULCS = isULCSstr == "" ? false :bool.parse(isULCSstr);
                   isIB = isIBstr == "" ? false :bool.parse(isIBstr);
                   isFlexTech = isFlexTechstr == "" ? false :bool.parse(isFlexTechstr);
+                  id = (idin == "") ? -1 : int.parse(idin);
 
                   courseNumberin = "";
                   isHUstr = "";
                   isULCSstr = "";
                   isIBstr = "";
                   isFlexTechstr = "";
+                  idin = "";
                 });
                 Navigator.pop(context);
               },

@@ -7,6 +7,7 @@ class ClassDatabaseHelper {
   static Database? _db;
   static final ClassDatabaseHelper instance = ClassDatabaseHelper._constructor();
 
+  final String _classIdColumnName = "id";
   final String _classTableName = "classes";
   final String _classDepartmentColumnName = "department";
   final String _classCourseNumberColumnName = "courseNumber";
@@ -31,10 +32,11 @@ class ClassDatabaseHelper {
     final databasePath = join(databaseDirPath, "class_database.db");
     final database = await openDatabase(
       databasePath, 
-      version: 3,
+      version: 4,
       onCreate: (db, version) {
         db.execute('''
         CREATE TABLE $_classTableName (
+          $_classIdColumnName INTEGER NOT NULL, 
           $_classDepartmentColumnName TEXT NOT NULL, 
           $_classCourseNumberColumnName INTEGER NOT NULL, 
           $_classCreditsColumnName INTEGER NOT NULL, 
@@ -60,7 +62,13 @@ class ClassDatabaseHelper {
 
   void dataOnCreate()
   {
-    addClass(Class(department: "EECS", courseNumber: 281, credits: 4, prereqs: "", isHU: 0, isFlexTech: 0, isIB: 0, isULCS: 0));
+    addClass(Class(department: "EECS", courseNumber: 183, credits: 4, prereqs: ""               , isHU: 0, isFlexTech: 0, isIB: 0, isULCS: 0, id: 0000183));
+    addClass(Class(department: "EECS", courseNumber: 203, credits: 4, prereqs: "0000183"        , isHU: 0, isFlexTech: 0, isIB: 0, isULCS: 0, id: 0000203));
+    addClass(Class(department: "EECS", courseNumber: 280, credits: 4, prereqs: "0000183"        , isHU: 0, isFlexTech: 0, isIB: 0, isULCS: 0, id: 0000280));
+    addClass(Class(department: "EECS", courseNumber: 281, credits: 4, prereqs: "0000203,0000280", isHU: 0, isFlexTech: 0, isIB: 0, isULCS: 0, id: 0000281));
+    addClass(Class(department: "EECS", courseNumber: 370, credits: 4, prereqs: "0000203,0000280", isHU: 0, isFlexTech: 0, isIB: 0, isULCS: 0, id: 0000370));
+    addClass(Class(department: "EECS", courseNumber: 376, credits: 4, prereqs: "0000203,0000280", isHU: 0, isFlexTech: 0, isIB: 0, isULCS: 0, id: 0000376));
+    addClass(Class(department: "EECS", courseNumber: 496, credits: 4, prereqs: "0000376,0000370", isHU: 0, isFlexTech: 0, isIB: 0, isULCS: 0, id: 0000496));
 
   }
 
@@ -71,6 +79,7 @@ class ClassDatabaseHelper {
     await db.insert(
       _classTableName, 
       {
+        _classIdColumnName: classToInsert.id,
         _classDepartmentColumnName: classToInsert.department, 
         _classCourseNumberColumnName: classToInsert.courseNumber,
         _classCreditsColumnName: classToInsert.credits, 
@@ -120,7 +129,8 @@ class ClassDatabaseHelper {
     bool isHU = false, 
     bool isFlexTech = false, 
     bool isIB = false, 
-    bool isULCS = false}) async
+    bool isULCS = false, 
+    int idNumber = -1}) async
     {
       int huNumber = isHU ? 1 : 0;
       int flexTechNumber = isFlexTech ? 1 : 0;
@@ -136,6 +146,11 @@ class ClassDatabaseHelper {
       AND $_classIsIBTechColumnName >= $ibNumber
       AND $_classIsULCSColumnName >= $ulcsNumber
       ''';
+
+      if (idNumber != -1)
+      {
+        query = "$query AND $_classIdColumnName = $idNumber";
+      }
 
       return getListFromQuery(query);
     }
