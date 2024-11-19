@@ -27,20 +27,20 @@
         },
         {
             "name": "um_schedule_builder2.0",
-            "cwd": "Users/ejustice/development/um_schedule_builder2.0",
+            "cwd": "./um_schedule_builder2.0",
             "request": "launch",
             "type": "dart"
         },
         {
             "name": "um_schedule_builder2.0 (profile mode)",
-            "cwd": "Users/ejustice/development/um_schedule_builder2.0",
+            "cwd": "./um_schedule_builder2.0",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
             "name": "um_schedule_builder2.0 (release mode)",
-            "cwd": "Users/ejustice/development/um_schedule_builder2.0",
+            "cwd": "./um_schedule_builder2.0",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
